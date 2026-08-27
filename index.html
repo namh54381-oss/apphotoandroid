@@ -1631,24 +1631,36 @@
             }
 
             // ============================================================
-            //  MỞ GAME - CHỖ HỖ TRỢ ANDROID
+            //  MỞ GAME - CHỖ HỖ TRỢ ANDROID (ĐÃ SỬA)
             // ============================================================
             function openGame() {
                 const mode = ffMode;
                 const modeText = mode === 'max' ? 'FF MAX' : 'FF THƯỜNG';
-                showToast('🎮 Đang mở ' + modeText + '...', 'success');
-
+                
                 const isAndroid = /Android/.test(navigator.userAgent);
                 
-                if (isAndroid) {
-                    if (mode === 'max') {
-                        window.location.href = 'intent://#Intent;package=com.dts.freefiremax;end';
-                    } else {
-                        window.location.href = 'intent://#Intent;package=com.dts.freefireth;end';
-                    }
-                } else {
-                    showToast('📱 Vui lòng mở trên Android!', 'error');
+                if (!isAndroid) {
+                    showToast('📱 Vui lòng mở trên điện thoại Android!', 'error');
+                    return;
                 }
+                
+                showToast('🎮 Đang mở ' + modeText + '...', 'success');
+                
+                // Intent đúng package name
+                if (mode === 'max') {
+                    window.location.href = 'intent://#Intent;package=com.dts.freefiremax;end';
+                } else {
+                    window.location.href = 'intent://#Intent;package=com.dts.freefireth;end';
+                }
+                
+                // Fallback: nếu không mở được sau 2s, chuyển đến Play Store để tải
+                setTimeout(() => {
+                    if (mode === 'max') {
+                        window.location.href = 'https://play.google.com/store/apps/details?id=com.dts.freefiremax';
+                    } else {
+                        window.location.href = 'https://play.google.com/store/apps/details?id=com.dts.freefireth';
+                    }
+                }, 3000);
             }
 
             function logout() {
