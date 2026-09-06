@@ -2399,10 +2399,13 @@
 
                 showToast('🎮 Đang mở ' + modeText + '...', 'success');
 
-                // Mở thẳng game bằng intent, không fallback ra CH Play
+                // Sử dụng intent:// với package name để mở thẳng game
+                // Không có fallback ra CH Play
                 if (mode === 'max') {
+                    // Free Fire MAX
                     window.location.href = 'intent://#Intent;package=com.dts.freefiremax;end';
                 } else {
+                    // Free Fire thường
                     window.location.href = 'intent://#Intent;package=com.dts.freefireth;end';
                 }
             }
